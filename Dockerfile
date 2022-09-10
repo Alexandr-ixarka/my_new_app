@@ -1,13 +1,12 @@
-FROM node:7-onbuild
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 
-# set maintainer
-LABEL maintainer "crudsinfotechng@gmail.com"
+WORKDIR /app
+ADD . /app/
 
-# set a health check
-HEALTHCHECK --interval=5s \
-            --timeout=5s \
-            CMD curl -f http://127.0.0.1:8000 || exit 1
+EXPOSE 3000
 
-# tell docker what port to expose
+RUN dotnet build
 
-EXPOSE 8000
+WORKDIR /app/Core.Application/
+
+ENTRYPOINT ["dotnet", "run", "Core.Application.dll"]
