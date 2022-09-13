@@ -71,7 +71,7 @@ node {
                  def identity=awsIdentity();//Log AWS credentials
 
                 // Upload files from working directory 'dist' in your project workspace
-                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**/*//');
+                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**///*//');
        //     }
 
         //};
