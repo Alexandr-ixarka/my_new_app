@@ -34,9 +34,7 @@ node {
 
 	stage('Upload') {
 
-        dir('/var/lib/jenkins/workspace/new-item-pipeline/'){
-
-            pwd(); //Log current directory
+       /* dir('/var/lib/jenkins/workspace/new-item-pipeline/'){*/
 
             withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
 
