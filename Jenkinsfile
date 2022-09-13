@@ -35,7 +35,7 @@ node {
 stage("Upload"){
  steps{
  withAWS(region:("us-east-1"), credentials:("jenkinsawsbucketkozich"){
- s3Upload(file:"${*.txt}", bucket:("jenkinsawsbucketkozich"), path:"/bucket/*.txt")
+ s3Upload(file:("*/*.js"), bucket:("jenkinsawsbucketkozich"), path:"/bucket/*.js")
  }
 }
  }
