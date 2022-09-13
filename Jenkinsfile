@@ -32,20 +32,50 @@ node {
  
    }
 
+	
+	
+	stage('Upload to S3') {
+        steps{
+            script {
+
+                dir(''){
+
+                    pwd(); //Log current directory
+
+                    withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
+
+                        def identity=awsIdentity();//Log AWS credentials
+
+                        // Upload files from working directory '' in your project workspace
+                        s3Upload(bucket:"jenkinsawsbucketkozich", workingDir:'', includePathPattern:'**/*');
+                        // invalidate CloudFront distribution
+                       // cfInvalidate(distribution:'E152QNNVYS423', paths:['/*'])
+                    }
+
+                };
+            }
+        }
+    }
+
+  }
+	
+	
+	
+	/*
 	stage('Upload') {
 
        /* dir('/var/lib/jenkins/workspace/new-item-pipeline/'){*/
 
-            withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
+          /*  withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
 
                  def identity=awsIdentity();//Log AWS credentials
 
                 // Upload files from working directory 'dist' in your project workspace
-                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**/*');
-            }
+                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**/*//');
+       //     }
 
         //};
-    }
+    ///}
 	
 	
 
