@@ -29,5 +29,17 @@ node {
             app.push("latest")
             } 
                 echo "Trying to Push Docker Build to DockerHub"
-    }
+ 
+   }
+
+stage("Upload"){
+ steps{
+ withAWS(region:("us-east-1"), credentials:("jenkinsawsbucketkozich"){
+ s3Upload(file:"${*.txt}", bucket:("jenkinsawsbucketkozich"), path:"/bucket/*.txt")
+ }
+}
+ }
+
+
+
 }
