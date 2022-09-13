@@ -44,7 +44,7 @@ node {
                 s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**/*');
             }
 
-        };
+        //};
     }
 	
 	
