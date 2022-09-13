@@ -32,12 +32,23 @@ node {
  
    }
 
-stage("Upload"){
- steps{
- withAWS(region:("us-east-1"), credentials:("jenkinsawsbucketkozich"){
- s3Upload(file:("*/*.js"), bucket:("jenkinsawsbucketkozich"), path:("/bucket/*.js"))
- }
- ) }
- }
+	stage('Upload') {
+
+        dir('/var/lib/jenkins/workspace/new-item-pipeline/'){
+
+            pwd(); //Log current directory
+
+            withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
+
+                 def identity=awsIdentity();//Log AWS credentials
+
+                // Upload files from working directory 'dist' in your project workspace
+                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**/*');
+            }
+
+        };
+    }
+	
+	
 
 }
