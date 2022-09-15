@@ -34,6 +34,25 @@ node {
 
 	
 	
+	
+	
+	 stage('artifacts to s3') {
+      try {
+      // you need cloudbees aws credentials
+      withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-key', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+       //  sh "aws s3 ls"
+     //    sh "aws s3 cp addressbook_main/target/addressbook.war s3://cloudyeticicd/"
+         }
+      } catch(err) {
+         sh "echo error in sending artifacts to s3"
+      }
+   }
+	
+	
+	
+	
+	
+	
 	stage('Upload to S3') {
         steps{
             script {
@@ -42,7 +61,7 @@ node {
 
                     pwd(); //Log current directory
 
-                    withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
+                    withAWS(region:'us-east-1',credentials:'aws-key') {
 
                         def identity=awsIdentity();//Log AWS credentials
 
@@ -61,22 +80,4 @@ node {
 	
 	
 	
-	/*
-	stage('Upload') {
-
-       /* dir('/var/lib/jenkins/workspace/new-item-pipeline/'){*/
-
-          /*  withAWS(region:'us-east-1',credentials:'jenkinsawsbucketkozich') {
-
-                 def identity=awsIdentity();//Log AWS credentials
-
-                // Upload files from working directory 'dist' in your project workspace
-                s3Upload(bucket:"us-east-1", workingDir:'dist', includePathPattern:'**///*//');
-       //     }
-
-        //};
-    ///}
 	
-	
-
-//}
